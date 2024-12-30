@@ -1,0 +1,21 @@
+tracking_metric: min
+num_epoch_repeats: 16
+num_epochs: 1000
+ray_batch_size: 1200
+nviews: [3, 4, 5]
+use_data_augmentation: true
+freeze_encoder: false
+print_interval: 5
+save_interval: 1 
+vis_interval: 1
+vis_repeat: 10
+gpu_id: [0]
+
+loss:
+  loss_type: logit
+  rgb_loss_type: mse
+
+optimizer:
+  learning_rate: 1.0e-4
+  gamma: 0.999
+

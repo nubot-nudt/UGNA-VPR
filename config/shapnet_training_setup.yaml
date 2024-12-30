@@ -1,0 +1,3 @@
+data_cfg_path: config/data/shapenet.yaml
+model_cfg_path: config/model/model.yaml
+trainer_cfg_path: config/trainer/trainer.yaml

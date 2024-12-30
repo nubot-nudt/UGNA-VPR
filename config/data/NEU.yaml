@@ -1,0 +1,19 @@
+name: NEU
+batch_size: 4
+shuffle: true
+num_workers: 0
+
+dataset:
+  data_rootdir: data/dataset/NEU
+  max_imgs: 10
+  image_size: [224, 224] # H W
+  z_near: 0.1
+  z_far: 3.5
+  format: opencv
+
+data_augmentation:
+  color_jitter:
+    hue_range: 0.1
+    saturation_range: 0.1
+    brightness_range: 0.1
+    contrast_range: 0.1

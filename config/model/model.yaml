@@ -1,0 +1,40 @@
+network:
+  encoder:
+    backbone: resnet34
+    pretrained: true
+    num_layers: 3
+    index_interp: bilinear
+    index_padding: border
+    upsample_interp: bilinear
+    use_first_pool: true
+    norm_type: batch
+
+  mlp:
+    mlp_feature:
+      d_latent: 256 
+      d_feature: 128
+      use_encoding: true
+      use_view: true
+      block_num: 2
+      positional_encoding:
+        num_freqs: 6
+        d_in: 3
+        include_input: true
+        freq_factor: 2
+    
+    mlp_output:
+      d_feature: 256
+      block_num: 2
+      d_out: 1024
+
+renderer:
+  d_in: 256
+  d_hidden: 128
+  raymarch_steps: 16
+  trainable: false
+  use_encoding: false
+  positional_encoding:
+    num_freqs: 6
+    d_in: 3
+    include_input: true
+    freq_factor: 2
