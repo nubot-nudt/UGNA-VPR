@@ -9,9 +9,9 @@ Training Date for UE at [dataset for UE](https://kaggle.com/datasets/1b2bb5b6d07
   
 ## Pre-trained model
 - Our pre-trained NeRF-h model at [nerfh](https://kaggle.com/datasets/c89a647ea14d5a753e7f2169e1b639e72f14cd3a09d0fbf707483b28eae47a90), it should be put in logs/, such as UGNA-VPR/logs/nerfh/shop1_4
-- Our pre-trained VPR model at [VPR-model], it should be put in logs/, such as UGNA-VPR/logs/MixVPR/Cambridge/ckpt_best.pth.tar
-- Our pre-trained UE model at [UE-model], it should be put in logs/, such as UGNA-VPR/logs/Cam_MixVPR_NBP
-- our results and its pre-trained model at [ours], it should be put in logs/, such as as UGNA-VPR/logs/tri_train_tea_1210_115010
+- Our pre-trained VPR model at [VPR-model](https://kaggle.com/datasets/3b7d611f65b241de5a4573c26591e58a3db7751ca969de03873ae8596330e778), it should be put in logs/, such as UGNA-VPR/logs/MixVPR/Cambridge/ckpt_best.pth.tar
+- Our pre-trained UE model at [UE-model](https://kaggle.com/datasets/680047c599214408c1d35559f0757acf7b487634c4c56f894a0af620df8f5f66), it should be put in logs/, such as UGNA-VPR/logs/Cam_MixVPR_NBP
+- our results and its pre-trained model at [ours](https://kaggle.com/datasets/f3e5f27facd26691b415844b1d165f458b44a1aee7e9b1107f4c2d55b9984d00), it should be put in logs/, such as as UGNA-VPR/logs/tri_train_tea_1210_115010
 
 ## Train VPR models
 In training mode
