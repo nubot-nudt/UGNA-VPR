@@ -451,12 +451,12 @@ def NBP_Cam(model_name, images_ref, poses_ref, poses_target):
 
     uncertainty = predict.all_uncertainty
     # print(uncertainty.shape)
-    # 计算按照从小到大排列的索引
+    
     sorted_indices = torch.argsort(uncertainty)
-    # 反转顺序，得到按照从高到低排列的索引
+   
     descending_indices = sorted_indices.flip(dims=[1])
 
-    # 对比实验
+    
     # data = [[0, 1, 2, 3, 4, 5]]
     # descending_indices = torch.tensor(data, device=device)
     return descending_indices[:, :3]
@@ -525,12 +525,12 @@ def NBP_NEU(model_name, images_ref, poses_ref, poses_target, device):
 
     uncertainty = predict.all_uncertainty
     # print(uncertainty.shape)
-    # 计算按照从小到大排列的索引
+    
     sorted_indices = torch.argsort(uncertainty)
-    # 反转顺序，得到按照从高到低排列的索引
+   
     descending_indices = sorted_indices.flip(dims=[1])
 
-    # 对比实验
+    
     # data = [[0, 1, 2, 3, 4, 5]]
     # descending_indices = torch.tensor(data, device=device)
     return descending_indices[:, :3]
@@ -599,12 +599,12 @@ def NBP_SIASUN(model_name, images_ref, poses_ref, poses_target, device):
 
     uncertainty = predict.all_uncertainty
     # print(uncertainty.shape)
-    # 计算按照从小到大排列的索引
+    
     sorted_indices = torch.argsort(uncertainty)
-    # 反转顺序，得到按照从高到低排列的索引g
+    
     descending_indices = sorted_indices.flip(dims=[1])
 
-    # 对比实验
+   
     # data = [[0, 1, 2, 3, 4, 5]]
     # descending_indices = torch.tensor(data, device=device)
     return descending_indices[:, :3]
@@ -616,7 +616,7 @@ def render_virtual_Cam_imgs(args, pose_perturb, img_idxs, hwf, device, render_kw
     H, W, focal = hwf
     rgb_list = []
     rgbs = []
-    # 创建保存文件夹
+  
     save_folder_rgb = "Cambridge/CambridgeNerf_train1_4/train/database/rgb"
     save_folder_poses = "Cambridge/CambridgeNerf_train1_4/train/database/poses"
     save_folder_poses4 = "Cambridge/CambridgeNerf_train1_4/train/database/poses4"
@@ -659,14 +659,14 @@ def render_virtual_Cam_imgs(args, pose_perturb, img_idxs, hwf, device, render_kw
             rgbs.append(rgb.cpu().numpy())
             torch.set_default_tensor_type('torch.FloatTensor')
         rgb_list.append(rgb.cpu())
-        # 保存图像
+     
         rgb8_f = to8b(rgbs[-1])  # save coarse+fine img
         filename = os.path.join(save_folder_rgb, 'zadd_{}_{:05d}_{}.png'.format(scene, batch_idx, epoch))
         imageio.imwrite(filename, rgb8_f)
-        # 保存位姿
+     
         poses_filename = os.path.join(save_folder_poses, "zadd_{}_{:05d}_{}.txt".format(scene, batch_idx, epoch))
         poses4_filename = os.path.join(save_folder_poses4, "zadd_{}_{:05d}_{}.txt".format(scene, batch_idx, epoch))
-        # 将中心化的坐标系转回原来的坐标系
+        
         # pose_avg_stats_file = osp.join(args.data_dir, scene) + '/pose_avg_stats.txt'
         pose = pose.cpu().numpy()
         pose_avg_stats_file = "data" + '/poses_avg_stats/' + scene + ".txt"
@@ -688,7 +688,7 @@ def render_virtual_Cam_imgs_init(args, pose_perturb, img_idxs, hwf, device, rend
     ])
     rgb_list = []
     rgbs = []
-    # 创建保存文件夹
+   
     save_folder_rgb = "Cambridge/Cambridgenerf1_4_init/train/database/rgb"
     save_folder_poses = "Cambridge/Cambridgenerf1_4_init/train/database/poses"
     save_folder_poses4 = "Cambridge/Cambridgenerf1_4_init/train/database/poses4"
@@ -731,14 +731,14 @@ def render_virtual_Cam_imgs_init(args, pose_perturb, img_idxs, hwf, device, rend
             rgbs.append(rgb.cpu().numpy())
             torch.set_default_tensor_type('torch.FloatTensor')
         rgb_list.append(rgb.cpu())
-        # 保存图像
+     
         rgb8_f = to8b(rgbs[-1])  # save coarse+fine img
         filename = os.path.join(save_folder_rgb, 'zadd_{}_{:05d}_{}.png'.format(scene, batch_idx, epoch))
         imageio.imwrite(filename, rgb8_f)
-        # 保存位姿
+        
         poses_filename = os.path.join(save_folder_poses, "zadd_{}_{:05d}_{}.txt".format(scene, batch_idx, epoch))
         poses4_filename = os.path.join(save_folder_poses4, "zadd_{}_{:05d}_{}.txt".format(scene, batch_idx, epoch))
-        # 将中心化的坐标系转回原来的坐标系
+        
         # pose_avg_stats_file = osp.join(args.data_dir, scene) + '/pose_avg_stats.txt'
         pose = pose.cpu().numpy()
         pose_avg_stats_file = "data" + '/poses_avg_stats/' + scene + ".txt"
@@ -925,22 +925,10 @@ import numpy as np
 
 
 def perturb_single_render_pose(poses, x, angle, n):
-    """
-    对给定的姿态张量进行随机扰动，产生新的姿态张量。
-
-    Args:
-    - poses (torch.Tensor): 姿态张量，形状为[58, 4, 4]
-    - x (float): 平移的范围
-    - angle (float): 角度扰动的范围
-    - n (int): 生成新姿态的数量
-
-    Returns:
-    - perturbed_poses (torch.Tensor): 新姿态张量，形状为[58, n, 4, 4]
-    """
     np.random.seed(42)  # for mobilenet
     device = torch.device("cuda")
     poses = poses.numpy()
-    # 初始化一个空张量来存储扰动后的姿态
+   
     new_c2w = np.zeros((poses.shape[0], n, 3, 4))
     new_poses = np.zeros((poses.shape[0], n, 4, 4))
     # print(new_c2w.shape)
@@ -949,22 +937,22 @@ def perturb_single_render_pose(poses, x, angle, n):
             new_c2w[i, j] = poses[i, :3, :]
             # print(new_c2w[i,j].shape)
             loc = deepcopy(new_c2w[i, j, :, 3])  # this is a must
-            # 扰动旋转姿态
+
             rot_rand = np.random.uniform(-angle, angle, 3)  # in degrees
             theta, phi, psi = rot_rand
 
             new_c2w[i, j] = perturb_rotation(new_c2w[i, j], theta, phi, psi)
 
             trans_rand_xy = np.random.uniform(-x, x, 2)
-            # 生成第三个元素的随机扰动，从-0.15到0.15之间
-            trans_rand_z = np.random.uniform(-0.10, 0.10, 1)  # 0.15 Cambridge  0.1 NEU
-            # 合并成一个长度为3的数组
+        
+            trans_rand_z = np.random.uniform(-0.10, 0.10, 1)  
+            
             trans_rand = np.concatenate((trans_rand_xy, trans_rand_z))
             new_c2w[i, j, :, 3] = loc + trans_rand  # perturb pos between -1 to 1
-            # 创建一个包含四个元素的列表
+            
             vector = np.array([0, 0, 0, 1])
             new_poses[i, j] = np.vstack((new_c2w[i, j], vector))
-    # 将矩阵和向量进行垂直堆叠
+
     # print(new_c2w.shape)
     # print(new_poses)
     new_poses = torch.Tensor(new_poses).to(device)
@@ -989,7 +977,7 @@ def render_virtual_NEU_imgs(args, pose_perturb, img_idxs, hwf, device, render_kw
     H, W, focal = hwf
     rgb_list = []
     rgbs = []
-    # 创建保存文件夹
+  
     save_folder_rgb = "Cambridge/NEUnight/train/database/rgb"
     save_folder_poses = "Cambridge/NEUnight/train/database/poses"
     save_folder_poses4 = "Cambridge/NEUnight/train/database/poses4"
@@ -1027,14 +1015,14 @@ def render_virtual_NEU_imgs(args, pose_perturb, img_idxs, hwf, device, render_kw
             rgbs.append(rgb.cpu().numpy())
             torch.set_default_tensor_type('torch.FloatTensor')
         rgb_list.append(rgb.cpu())
-        # 保存图像
+  
         rgb8_f = to8b(rgbs[-1])  # save coarse+fine img
         filename = os.path.join(save_folder_rgb, 'zadd_{}_{:05d}_{}.png'.format(scene, batch_idx, epoch))
         imageio.imwrite(filename, rgb8_f)
-        # 保存位姿
+
         poses_filename = os.path.join(save_folder_poses, "zadd_{}_{:05d}_{}.txt".format(scene, batch_idx, epoch))
         poses4_filename = os.path.join(save_folder_poses4, "zadd_{}_{:05d}_{}.txt".format(scene, batch_idx, epoch))
-        # 将中心化的坐标系转回原来的坐标系
+  
         pose = pose.cpu().numpy()
         # pose_avg_stats_file = "data" + '/pose_avg_stats/' + scene + ".txt"
         pose_loc, pose_t = inv_concered_NEU(pose, batch_idx, scene)
@@ -1097,14 +1085,14 @@ def render_virtual_NEU_imgs_init(args, pose_perturb, img_idxs, hwf, device, rend
             rgbs.append(rgb.cpu().numpy())
             torch.set_default_tensor_type('torch.FloatTensor')
         rgb_list.append(rgb.cpu())
-        # 保存图像
+    
         rgb8_f = to8b(rgbs[-1])  # save coarse+fine img
         filename = os.path.join(save_folder_rgb, 'zadd_{}_{:05d}_{}.png'.format(scene, batch_idx, epoch))
         imageio.imwrite(filename, rgb8_f)
-        # 保存位姿
+     
         poses_filename = os.path.join(save_folder_poses, "zadd_{}_{:05d}_{}.txt".format(scene, batch_idx, epoch))
         poses4_filename = os.path.join(save_folder_poses4, "zadd_{}_{:05d}_{}.txt".format(scene, batch_idx, epoch))
-        # 将中心化的坐标系转回原来的坐标系
+    
         pose = pose.cpu().numpy()
         # pose_avg_stats_file = "data" + '/pose_avg_stats/' + scene + ".txt"
         pose_loc, pose_t = inv_concered_NEU(pose, batch_idx, scene)
@@ -1167,14 +1155,14 @@ def render_virtual_SIA_imgs_init(args, pose_perturb, img_idxs, hwf, device, rend
             rgbs.append(rgb.cpu().numpy())
             torch.set_default_tensor_type('torch.FloatTensor')
         rgb_list.append(rgb.cpu())
-        # 保存图像
+       
         rgb8_f = to8b(rgbs[-1])  # save coarse+fine img
         filename = os.path.join(save_folder_rgb, 'zadd_{}_{:05d}_{}.png'.format(scene, batch_idx, epoch))
         imageio.imwrite(filename, rgb8_f)
-        # 保存位姿
+       
         poses_filename = os.path.join(save_folder_poses, "zadd_{}_{:05d}_{}.txt".format(scene, batch_idx, epoch))
         poses4_filename = os.path.join(save_folder_poses4, "zadd_{}_{:05d}_{}.txt".format(scene, batch_idx, epoch))
-        # 将中心化的坐标系转回原来的坐标系
+        
         pose = pose.cpu().numpy()
         # pose_avg_stats_file = "data" + '/pose_avg_stats/' + scene + ".txt"
         pose_loc, pose_t = inv_concered_SIASUN(pose, batch_idx, scene)
@@ -1231,14 +1219,14 @@ def render_virtual_SIA_imgs(args, pose_perturb, img_idxs, hwf, device, render_kw
             rgbs.append(rgb.cpu().numpy())
             torch.set_default_tensor_type('torch.FloatTensor')
         rgb_list.append(rgb.cpu())
-        # 保存图像
+       
         rgb8_f = to8b(rgbs[-1])  # save coarse+fine img
         filename = os.path.join(save_folder_rgb, 'zadd_{}_{:05d}_{}.png'.format(scene, batch_idx, epoch))
         imageio.imwrite(filename, rgb8_f)
-        # 保存位姿
+     
         poses_filename = os.path.join(save_folder_poses, "zadd_{}_{:05d}_{}.txt".format(scene, batch_idx, epoch))
         poses4_filename = os.path.join(save_folder_poses4, "zadd_{}_{:05d}{}.txt".format(scene, batch_idx, epoch))
-        # 将中心化的坐标系转回原来的坐标系
+        
         pose = pose.cpu().numpy()
         # pose_avg_stats_file = "data" + '/pose_avg_stats/' + scene + ".txt"
         pose_loc, pose_t = inv_concered_SIASUN(pose, batch_idx, scene)
@@ -1255,7 +1243,7 @@ def inv_concered_NEU(pose, batch_idx, scene):
     # print(pose_t)
     pose_t = E_pose
     import re
-    pattern = re.compile(r'NEU_scan(\d+)')  # 根据nerf文件的名字该
+    pattern = re.compile(r'NEU_scan(\d+)') 
     match = pattern.match(scene)
     if match:
         number = int(match.group(1))
@@ -1263,7 +1251,7 @@ def inv_concered_NEU(pose, batch_idx, scene):
         print("error")
     element_1 = pose_t[0, 3] + number * 100
     element_2 = pose_t[1, 3] + number * 100
-    # 将提取的元素组成一个新的矩阵
+   
     pose_loc = np.array([[element_1, element_2]])
     return pose_loc, pose_t
 
@@ -1318,7 +1306,7 @@ def inv_concered_SIASUN(pose, batch_idx, scene):
         print("error")
     element_1 = pose_t[0, 3] + number * 100
     element_2 = pose_t[1, 3] + number * 100
-    # 将提取的元素组成一个新的矩阵
+   
     pose_loc = np.array([[element_1, element_2]])
     return pose_loc, pose_t
 
@@ -1374,14 +1362,14 @@ def generate_random_matrices_with_constraints(matrices, x):
 
     matrices_array = np.array(matrices)
 
-    # 获取每个位置的最小值和最大值
+    
     min_values = matrices_array.min(axis=0)
     max_values = matrices_array.max(axis=0)
 
-    # 生成随机矩阵
+   
     random_matrices = np.random.uniform(low=min_values, high=max_values, size=(x, 3, 4, 4))
 
-    # 设置最后一行
+    
     last_row = np.array([0, 0, 0, 1])
     for matrix in random_matrices:
         matrix[:, 3, :] = last_row
@@ -1421,31 +1409,18 @@ if __name__ == '__main__':
     print(selected_poses.shape) #(58,3,4,4)
 
 
-    # 假设你的张量是data
     data = torch.tensor([[0.0472, 0.0442, 0.0470, 0.0465, 0.0271, 0.0430]], device='cuda:0')
 
-    # 计算按照从小到大排列的索引
     sorted_indices = torch.argsort(data)
 
-    # 反转顺序，得到按照从高到低排列的索引
     descending_indices = sorted_indices.flip(dims=[1])
     a=descending_indices[:, :3]
-    # 输出结果
     print(descending_indices)
 
     scene = "abc"
     batch_idx = 10
-
-    # 格式化字符串
     filename = '{}_{:05d}.png'.format(scene, batch_idx)
 
     print(filename)
 """
-# 测试函数
-poses = torch.rand(58, 4, 4)  # 姿态张量
-x = 0.1  # 平移的范围
-angle = 10.0  # 角度扰动的范围
-n = 5  # 生成新姿态的数量
-
-perturbed_poses = perturb_single_render_pose(poses, x, angle, n)
-print(perturbed_poses.shape)  # 输出 torch.Size([58, 5, 4, 4])
+)
