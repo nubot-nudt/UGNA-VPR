@@ -6,7 +6,7 @@ from utils import parser
 import click
 import yaml
 import warnings
-from networks.MixVPR import TeacherNet
+from networks.mixvpr import TeacherNet
 import torch
 warnings.filterwarnings("ignore")
 
