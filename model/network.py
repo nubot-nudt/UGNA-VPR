@@ -7,7 +7,7 @@ import torch.autograd.profiler as profiler
 from utils import util
 import numpy as np
 from dotmap import DotMap
-from networks.MIxVPR import TeacherNet
+from networks.mixvpr import TeacherNet
 
 
 def pose_tensor_to_pose_representations(pose_tensor):
