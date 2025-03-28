@@ -1,3 +1,21 @@
+# UGNA-VPR: A Novel Training Paradigm for Visual Place Recognition Based on Uncertainty-Guided NeRF Augmentation
+
+
+## Citation
+If you use our code, please cite the corresponding paper:
+```
+@ARTICLE{shen2025ral,
+  author={Shen, Yehui and Zhang, Lei and Li, Qingqiu and Zhao, Xiongwei and Wang, Yue and Lu, Huimin and Chen, Xieyuanli},
+  journal={IEEE Robotics and Automation Letters}, 
+  title={UGNA-VPR: A Novel Training Paradigm for Visual Place Recognition Based on Uncertainty-Guided NeRF Augmentation}, 
+  year={2025},
+  volume={1},
+  number={1},
+  pages={1-8},
+  doi={10.1109/LRA.2025.3554105}
+}
+```
+
 ## Datasets
 
 - The Cambridge dataset can be referenced at [DFNet](https://github.com/activevisionlab/dfnet).
