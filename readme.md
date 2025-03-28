@@ -1,6 +1,6 @@
 # UGNA-VPR: A Novel Training Paradigm for Visual Place Recognition Based on Uncertainty-Guided NeRF Augmentation
 <p align="center">
-  <img src="./scipt/dataset/UGNA_VPR_logo.png" alt="Project Logo" width="400"/>
+  <img src="./script/dataset/UGNA_VPR_logo.png" alt="Project Logo" width="400"/>
 </p>
 
 <p align="center">
