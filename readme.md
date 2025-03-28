@@ -8,7 +8,7 @@
   </a>
 </p>
 
-<h3 align="center">UGNA-VPR: A Novel Training Paradigm for Visual Place Recognition Based on Uncertainty-Guided NeRF Augmentation</h3>
+<h3 align="center"> UGNA-VPR: A Novel Training Paradigm for Visual Place Recognition Based on Uncertainty-Guided NeRF Augmentation</h3>
 
 ## Citation
 If you use our code, please cite the corresponding paper:
